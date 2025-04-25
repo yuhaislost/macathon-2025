@@ -1,11 +1,16 @@
-from pydantic import BaseModel, Field, StrictStr, ConfigDict
+from pydantic import BaseModel, Field, StrictStr, StrictInt, ConfigDict
 from typing import Literal
 
 
 class ScenarioSchema(BaseModel):
-    scenario: StrictStr = Field(
+    scenario_user: StrictStr = Field(
         ...,
         description="The scenario, and context for where the user is meeting the person described by the constructed profile for the first time"
+    )
+
+    scenario_agent: StrictStr = Field(
+        ...,
+        description="The scenario, and context for the person described by the constructed profile and has no information about the user"
     )
 
     setting_description: StrictStr = Field(
@@ -16,6 +21,11 @@ class ScenarioSchema(BaseModel):
     gender: Literal["male", "female"] = Field(
         ...,
         description="The gender of the person in the profile"
+    )
+
+    age: StrictInt = Field(
+        ...,
+        description="The of the person in the profile, in years (19 to 25)"
     )
 
     personality: StrictStr = Field(
@@ -48,7 +58,7 @@ class ScenarioSchema(BaseModel):
         description="The dating status of the person in the profile"
     )
 
-    romaantic_interest: Literal["currently seeking someone", "not currently seeking a partner"] = Field(
+    romantic_interest: Literal["currently seeking someone", "not currently seeking a partner"] = Field(
         ...,
         description="The romantic interest of the person in the profile"
     )
