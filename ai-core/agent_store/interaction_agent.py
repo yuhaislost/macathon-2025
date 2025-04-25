@@ -5,8 +5,8 @@ from schema.interaction_schema import ChatInteractionSchema
 
 prompt_name = "interaction_agent"
 
-current_working_directory = os.cwd()
-prompt_store_path = os.path.join(current_working_directory, "prompts")
+current_working_directory = os.getcwd()
+prompt_store_path = os.path.join(current_working_directory, "agent_store/prompts")
 prompt_path = os.path.join(prompt_store_path, f"{prompt_name}.md")
 
 if not os.path.isfile(prompt_path):
@@ -18,7 +18,7 @@ with open(prompt_path, "r") as prompt_file:
     prompt = prompt_file.read()
 
 
-ScenarioAgent = Agent(
+InteractionAgent = Agent(
     name="A Person",
     instructions=prompt,
     model="gpt-4.1-mini",
