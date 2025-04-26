@@ -1,33 +1,37 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
+import type { Metadata } from "next";
+import { Poppins } from "next/font/google";
+import "./globals.css";
+import { ClerkProvider } from "@clerk/nextjs";
+import { ThemeProvider } from "./providers/theme-provider";
+import { ToastProvider } from "./providers/toast-provider";
 
-const inter = Inter({ subsets: ["latin"] })
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"]
+})
 
 export const metadata: Metadata = {
-  title: "cutframe.",
-  description: "A minimalist UI application",
-}
+  title: "Rizz",
+  description: "Breaking the social-gender barrier through providing a safe practice environment for communication nourishment",
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${poppins.className}`}
         >
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
-  )
+          <ThemeProvider attribute={'class'} defaultTheme="system" enableSystem>
+            <ToastProvider/>
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
+  );
 }
